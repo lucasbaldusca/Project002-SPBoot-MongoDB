@@ -1,5 +1,8 @@
 package com.vbsoft.project002.resources;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.vbsoft.project002.dto.UserDto;
 import com.vbsoft.project002.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +20,10 @@ public class UserResource {
 	UserService service;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<User>> findAll() {
+	public ResponseEntity<List<UserDto>> findAll() {
 		List<User> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+		List<UserDto> listDto = list.stream().map(x -> new UserDto(x)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 
 }
