@@ -1,6 +1,7 @@
 package com.vbsoft.project002.services;
 
 import com.vbsoft.project002.domain.User;
+import com.vbsoft.project002.dto.UserDto;
 import com.vbsoft.project002.repository.UserRepository;
 import com.vbsoft.project002.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,13 @@ public class UserService {
     public User findById(String id) {
         Optional<User> obj = repo.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto Não encontrado"));
+    }
+
+    public User insert (User obj){
+        return repo.insert(obj);
+    }
+
+    public User fromDTO (UserDto objDto) {
+        return new User(objDto.getId(),objDto.getName(), objDto.getEmail());
     }
 }
